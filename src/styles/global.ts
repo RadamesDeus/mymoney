@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
   :root{
     --red:#E52E4D;
+    --green:#33CC95;
     --blue:#5428CC;
 
     --blue-light: #6933ff;
@@ -52,4 +53,30 @@ export const GlobalStyle = createGlobalStyle`
     opacity:  0.6;
     cursor: not-allowed;
   }
+
+
+  .customStylesModal{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-Color: rgba(0, 0, 0, 0.5);
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+  }
+
+  .customStylesModalContent{
+    position: relative;
+    width: 600px;
+    background-color:#F0F2F5;
+    border-radius: 0.5rem;
+  }
+
+
+
 `

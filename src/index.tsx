@@ -1,4 +1,26 @@
+import React from "react";
 import ReactDOM from "react-dom";
+import { createServer } from "miragejs";
 import { App } from "./App";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+createServer({
+  routes() {
+    this.namespace = "api";
+    this.get("/transactions", () => {
+      return [
+        {
+          id: 1,
+          title: "Desenvolvimento de site",
+          price: "12000,00",
+        },
+      ];
+    });
+  },
+});
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root")
+);
