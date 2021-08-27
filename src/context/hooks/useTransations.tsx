@@ -58,6 +58,6 @@ export const TrasationsProvider: React.FC = ({ children }) => {
 };
 
 export function useTransations() {
-  const { transactions, creterTransaction } = useContext(TrasationsContxt);
-  return { transactions, creterTransaction };
+  const context = useContext(TrasationsContxt);
+  return context;
 }
