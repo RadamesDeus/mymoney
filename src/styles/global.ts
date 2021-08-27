@@ -72,7 +72,7 @@ export const GlobalStyle = createGlobalStyle`
 
   .customStylesModalContent{
     position: relative;
-    width: 600px;
+    width: 576px;
     background-color:#F0F2F5;
     border-radius: 0.5rem;
   }

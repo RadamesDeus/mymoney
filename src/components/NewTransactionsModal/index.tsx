@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import { api } from "../../services/api";
+import React, { FormEvent, useState } from "react";
+
 import Modal from "react-modal";
-import { Container } from "./styles";
+import { Container, TypeButtom, TypeTransactions } from "./styles";
 
 import BtnClose from "../../assets/BtnClose.svg";
+import Saidas from "../../assets/Saidas.svg";
+import Entradas from "../../assets/Entradas.svg";
+
+import { useTransations } from "../../context/hooks/useTransations";
 
 Modal.setAppElement("#root");
 
@@ -11,24 +15,42 @@ interface NewTransactionsModalProps {
   isOpenModal: boolean;
   onCloseModal: () => void;
 }
+
+enum TypeTransaction {
+  none = "",
+  typeIn = "income",
+  typeout = "outcome",
+}
+
 const NewTransactionsModal: React.FC<NewTransactionsModalProps> = ({
   onCloseModal,
   isOpenModal,
 }) => {
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // subtitle.style.color = "#f00";
+  const { creterTransaction } = useTransations();
+
+  const [type, setType] = useState<TypeTransaction>(TypeTransaction.none);
+  const [value, setValue] = useState(0);
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+
+  async function HandlecreateNewTransactionsModalProps(event: FormEvent) {
+    event.preventDefault();
+    await creterTransaction({ category, title, type, value });
+    onCloseModal();
+    setType(TypeTransaction.none);
+    setValue(0);
+    setTitle("");
+    setCategory("");
   }
 
   return (
     <Modal
       isOpen={isOpenModal}
       onRequestClose={onCloseModal}
-      // onAfterOpen={afterOpenModal}
       overlayClassName="customStylesModal"
       className="customStylesModalContent"
     >
-      <Container>
+      <Container onSubmit={HandlecreateNewTransactionsModalProps}>
         <img
           className="modal-close"
           src={BtnClose}
@@ -36,13 +58,47 @@ const NewTransactionsModal: React.FC<NewTransactionsModalProps> = ({
           alt="Fechar"
         />
         <h1>Cadastrar transação</h1>
-        <input placeholder="Titulo" />
-        <input placeholder="Valor" type="number" />
-        <div className="modal-checkbox">
-          <input placeholder="Valor" type="checkbox" />
-          <input placeholder="Valor" type="checkbox" />
-        </div>
-        <input placeholder="Catergoia" />
+
+        <input
+          placeholder="Titulo"
+          value={title}
+          onChange={(evt) => setTitle(evt.target.value)}
+        />
+
+        <input
+          placeholder="Valor"
+          type="number"
+          value={value}
+          onChange={(evt) => setValue(Number(evt.target.value))}
+        />
+
+        <TypeTransactions>
+          <TypeButtom
+            isActive={type === TypeTransaction.typeIn}
+            className="type-in"
+            type="button"
+            onClick={() => setType(TypeTransaction.typeIn)}
+          >
+            <img src={Entradas} alt="Entrada" />
+            <span>Entrada</span>
+          </TypeButtom>
+          <TypeButtom
+            isActive={type === TypeTransaction.typeout}
+            className="type-out"
+            type="button"
+            onClick={() => setType(TypeTransaction.typeout)}
+          >
+            <img src={Saidas} alt="Saidas" />
+            <span>Saída</span>
+          </TypeButtom>
+        </TypeTransactions>
+
+        <input
+          placeholder="Catergoria"
+          value={category}
+          onChange={(evt) => setCategory(evt.target.value)}
+        />
+
         <button type="submit">Cadastrar</button>
       </Container>
     </Modal>

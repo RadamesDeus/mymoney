@@ -35,10 +35,10 @@ export const Container = styled.div`
       color: #969CB2;
     }
 
-    &.entrada{
+    &.income{
       color: var(--green);
     }
-    &.saida{
+    &.outcome{
       color: var(--red);
     }
   }

@@ -1,14 +1,17 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { darken, rgba } from 'polished'
 
 export const Container = styled.form`
   
   padding: 3rem;
-  
+  margin-bottom:1rem;
 
   h1{
       font-size: 1.5em;
+      margin-top:1.5rem;
       margin-bottom:1.5rem;
       color:#363F5F;
+      
     }
 
     img.modal-close{
@@ -54,18 +57,6 @@ export const Container = styled.form`
     }
 
 
-    .modal-checkbox{
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      width: 100%;
-    }
-
-
-    .modal-checkbox input[type="checkbox"] {
-      width: 100px;
-      
-    }
     button[type="submit"] {
       display: block;
       width: 100%;
@@ -89,3 +80,46 @@ export const Container = styled.form`
 
 `
 
+
+export const TypeTransactions = styled.div`
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 0.5rem;
+margin: 1rem 0;
+
+img{
+  width: 20px;
+  margin-right: 1rem;
+}
+
+`
+
+interface ITypeTransactionsrProps {
+  isActive: boolean;
+}
+
+export const TypeButtom = styled.button<ITypeTransactionsrProps>`
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid #d7d7d7;
+  transition: all 0.5s;
+  background: transparent;
+  &:hover {
+    border-color: ${darken(0.1, '#d7d7d7')};
+  }
+  &:active{
+       transform: translateY(0.5rem);
+     }
+
+  &.type-in{
+   background:  ${props => props.isActive ? rgba('#12A454', 0.1) : 'transparent'};
+  }
+
+  &.type-out{
+    background:  ${props => props.isActive ? rgba('#E52E4D', 0.1) : 'transparent'};
+  }
+
+`
